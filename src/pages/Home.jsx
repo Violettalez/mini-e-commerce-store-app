@@ -214,7 +214,7 @@ function Home({ data }) {
           </details>
         </div>
 
-        <button className="bg-basic-red text-white py-2 px-4 rounded hover:bg-basic-black">
+        <button className="bg-basic-red text-white py-2 px-4 rounded hover:bg-dark-red">
           Apply
         </button>
       </section>

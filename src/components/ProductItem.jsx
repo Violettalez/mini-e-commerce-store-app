@@ -2,7 +2,7 @@ import React from "react";
 
 const ProductItem = ({ product }) => {
   return (
-    <div className="p-4 rounded-xl flex flex-col justify-between w-[32%] shadow-2xl">
+    <div className="p-4 rounded-xl flex flex-col justify-between w-[32%] shadow-xl">
       <div className="flex flex-col">
         <img
           src={product.picture}

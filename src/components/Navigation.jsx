@@ -4,7 +4,7 @@ function Navigation({ data }) {
   return (
     <nav className="flex justify-between items-center mb-5">
       <img src="/long-logo.svg" alt="logo" draggable="false" />
-      <ul className="flex gap-15 items-center *:text-base *:hover:border-b-3 *:hover:border-basic-red *:font-header *:hover:cursor-pointer">
+      <ul className="flex gap-15 items-center *:text-lg *:hover:border-b-3 *:hover:border-basic-red *:font-header *:hover:cursor-pointer">
         <li>Home</li>
         <li>About us</li>
         <li>Favorites</li>

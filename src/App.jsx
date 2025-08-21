@@ -7,20 +7,24 @@ import Favorites from "./pages/Favorites";
 import Navigation from "./components/Navigation";
 import Orders from "./pages/Orders";
 import AboutUs from "./pages/AboutUs";
+import { store } from "./store/store";
+import { Provider } from "react-redux";
 function App() {
   return (
-    <BrowserRouter>
-      <div className="w-full min-h-screen py-5 px-20">
-        <Navigation />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/favorites" element={<Favorites />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/about" element={<AboutUs />} />
-        </Routes>
-      </div>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <div className="w-full min-h-screen py-5 px-20">
+          <Navigation />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/favorites" element={<Favorites />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/about" element={<AboutUs />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </Provider>
   );
 }
 

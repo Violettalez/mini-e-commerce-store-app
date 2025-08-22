@@ -3,17 +3,29 @@ import {
   addProduct,
   deleteProduct,
   totalDeleteProduct,
+  addPromoCode,
+  cleanCart,
 } from "../store/cartSlice";
 import { MdDeleteForever } from "react-icons/md";
 import { FaSquarePlus, FaSquareMinus } from "react-icons/fa6";
+import { FaBoxes } from "react-icons/fa";
+import {
+  selectCartTotalWithDiscount,
+  selectCartQuantity,
+  selectCartTotal,
+} from "../store/cartSlice";
+import { useState } from "react";
 
 function Cart({ data }) {
-  const { products, sum } = useSelector((state) => state.cart);
+  const { products, discount } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-
+  const sum = useSelector(selectCartTotal);
+  const totalQ = useSelector(selectCartQuantity);
+  const [promoCode, setPromoCode] = useState("");
+  const totalWithDiscount = useSelector(selectCartTotalWithDiscount);
   return (
-    <div className="flex flex-row gap-6">
-      <div className="flex-2 flex flex-col gap-4 w-full">
+    <div className="flex flex-row gap-6 pt-10">
+      <div className="flex flex-col gap-4 w-[63vw] pt-4">
         {products.length !== 0 ? (
           products.map((product) => (
             <div
@@ -24,6 +36,7 @@ function Cart({ data }) {
                 src={product.picture}
                 alt={product.title}
                 className=" w-[100px] h-[100px] object-cover mb-4 rounded flex-1"
+                draggable="false"
               />
               <div className="flex-flex-col gap-0.5 flex-3">
                 <h2 className="text-lg font-semibold font-header">
@@ -34,7 +47,7 @@ function Cart({ data }) {
                   Category: {product.category}
                 </p>
                 <p className=" text-sm">{product.description}</p>
-                <p className=" text-lg font-bold">${product.price}</p>
+                <p className=" text-lg font-bold">₴{product.price}</p>
                 <p className=" text-sm text-yellow-500">
                   Rating: {product.rating}⭐
                 </p>
@@ -57,13 +70,102 @@ function Cart({ data }) {
             </div>
           ))
         ) : (
-          <div>
-            <p>No products in your cart!</p>
+          <div className="flex flex-col items-center justify-center py-[20%]">
+            <FaBoxes className="text-6xl text-basic-red opacity-50" />
+            <p className="font-bold opacity-50">No products in your cart!</p>
           </div>
         )}
       </div>
 
-      <div className="flex-1 bg-dark-weight h-[80vh] rounded-xl"></div>
+      <div className="fixed right-20 bg-dark-weight min-h-[80vh] w-[25%] rounded-xl flex flex-col py-6 px-[15px] text-white">
+        <div className="flex gap-2 mb-6">
+          <input
+            type="text"
+            placeholder="PromoCode"
+            value={promoCode}
+            className="flex-1 px-3 py-2 rounded-lg bg-basic-weight text-basic-black placeholder-gray-400 border border-gray-600 focus:border-red-500 focus:outline-none"
+            onChange={(e) => setPromoCode(e.target.value)}
+          />
+
+          <button
+            className="px-4 py-2 bg-basic-red rounded-lg hover:bg-red-700 transition disabled:bg-dark-weight disabled:border-1 disabled:border-basic-red disabled:text-basic-red"
+            disabled={totalQ < 1}
+            onClick={() => dispatch(addPromoCode(promoCode))}
+          >
+            Apply
+          </button>
+        </div>
+        {discount !== 0 ? (
+          <p className=" text-basic-red">Your discount: {discount}%</p>
+        ) : null}
+        <h2 className="text-xl font-semibold mb-4 border-b text-basic-black">
+          Your Order
+        </h2>
+
+        <div className="flex justify-between mb-2 text-basic-black items-center">
+          <p>Products quantity:</p>
+          <p>{totalQ}</p>
+        </div>
+        <div className="flex justify-between mb-3 text-basic-black items-center">
+          <p>Total:</p>
+          {discount === 0 ? (
+            <p className="text-2xl font-semibold">₴{sum}</p>
+          ) : (
+            <div>
+              <p className="text-2xl font-semibold text-basic-red">
+                ₴{totalWithDiscount}
+              </p>
+              <p className="text-lg line-through text-gray-500">₴{sum}</p>
+            </div>
+          )}
+        </div>
+
+        <details className="py-3  flex flex-col gap-2" open="true">
+          <summary className="text-xl font-semibold mb-3 border-b text-basic-black">
+            Delivery
+          </summary>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between rounded-xl border border-gray-700/60 p-2 hover:border-basic-red transition">
+              <div>
+                <p className="font-medium text-basic-black">
+                  Standard Delivery
+                </p>
+                <p className="text-sm text-gray-400">3–5 days</p>
+              </div>
+              <span className="font-semibold text-basic-black">₴150</span>
+            </div>
+
+            <div className="flex items-center justify-between rounded-xl border border-gray-700/60 p-2 hover:border-basic-red transition">
+              <div>
+                <p className="font-medium text-basic-black">Express Delivery</p>
+                <p className="text-sm text-gray-400">1–2 days</p>
+              </div>
+              <span className="font-semibold text-basic-black">₴350</span>
+            </div>
+
+            <div className="flex items-center justify-between rounded-xl border border-gray-700/60 p-2 hover:border-basic-red transition">
+              <div>
+                <p className="font-medium text-basic-black">Pickup Point</p>
+                <p className="text-sm text-gray-400">2–3 days</p>
+              </div>
+              <span className="font-semibold text-basic-red">Free</span>
+            </div>
+          </div>
+        </details>
+
+        <button
+          className="w-full py-3 mt-auto  rounded-xl bg-basic-red font-semibold hover:bg-red-700 transition disabled:bg-dark-weight disabled:border-1 disabled:border-basic-red disabled:text-basic-red"
+          disabled={totalQ < 1}
+        >
+          Apply order
+        </button>
+        <button
+          className="text-sm text-gray-400 py-3 cursor-pointer"
+          onClick={() => dispatch(cleanCart())}
+        >
+          Clean Cart
+        </button>
+      </div>
     </div>
   );
 }

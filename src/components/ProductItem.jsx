@@ -11,6 +11,7 @@ const ProductItem = ({ product }) => {
           src={product.picture}
           alt={product.title}
           className=" w-full h-48 object-cover mb-4 rounded"
+          draggable="false"
         />
         <h2 className="text-lg font-semibold mb-2 font-header">
           {product.title}
@@ -20,7 +21,7 @@ const ProductItem = ({ product }) => {
           Category: {product.category}
         </p>
         <p className=" text-sm mb-2">{product.description}</p>
-        <p className=" text-lg font-bold mb-2">${product.price}</p>
+        <p className=" text-lg font-bold mb-2">₴{product.price}</p>
         <p className=" text-sm text-yellow-500">Rating: {product.rating}⭐</p>
       </div>
 

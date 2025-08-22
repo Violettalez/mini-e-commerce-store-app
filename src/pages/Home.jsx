@@ -33,7 +33,7 @@ function Home({ data }) {
   }, []);
 
   return (
-    <div className="flex bg-basic-weight w-full min-h-[85vh] rounded-xl">
+    <div className="flex bg-basic-weight w-full min-h-[85vh] rounded-xl pt-10">
       <section className="bg-dark-weight flex-1 py-5 px-5 rounded-xl flex flex-col gap-10">
         <div className="relative w-full max-w-sm">
           <BsSearchHeart

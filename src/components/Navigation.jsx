@@ -3,10 +3,13 @@ import { PiShoppingCartFill } from "react-icons/pi";
 import { FaBoxOpen } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import {
+  selectCartQuantity,
+} from "../store/cartSlice";
 function Navigation({ data }) {
-  const { totalQ } = useSelector((state) => state.cart);
+  const totalQ = useSelector(selectCartQuantity);
   return (
-    <nav className="flex justify-between items-center mb-5">
+    <nav className="fixed top-0 left-0 w-full bg-basic-weight py-4 px-25 flex justify-between items-center z-100">
       <img src="/long-logo.svg" alt="logo" draggable="false" />
       <ul className="flex gap-15 items-center *:text-lg *:hover:border-b-3 *:hover:border-basic-red *:font-header *:hover:cursor-pointer">
         <li>

@@ -4,8 +4,11 @@ const cartSlice = createSlice({
   name: "cart",
   initialState: {
     products: [],
-    sum: 0,
-    totalQ: 0,
+    promoCodes: [
+      { pC: "SALES777", discount: 10 },
+      { pC: "VIOLETTA27", discount: 15 },
+    ],
+    discount: 0,
   },
   reducers: {
     addProduct: (state, action) => {
@@ -15,8 +18,6 @@ const cartSlice = createSlice({
       } else {
         state.products.push({ ...action.payload, quantity: 1 });
       }
-      state.sum += Number(action.payload.price);
-      state.totalQ += 1;
     },
     deleteProduct: (state, action) => {
       const prod = state.products.find((pr) => pr.id === action.payload);
@@ -27,28 +28,44 @@ const cartSlice = createSlice({
             (product) => product.id !== action.payload
           );
         }
-        state.sum -= Number(prod.price);
-        state.totalQ -= 1;
       }
     },
     totalDeleteProduct: (state, action) => {
       const prod = state.products.find((pr) => pr.id === action.payload);
       if (prod) {
-        state.sum -= Number(prod.price) * prod.quantity;
-        state.totalQ -= prod.quantity;
         state.products = state.products.filter(
           (product) => product.id !== action.payload
         );
       }
     },
-    clearCart: (state) => {
+    cleanCart: (state) => {
       state.products = [];
-      state.sum = 0;
-      state.totalQ = 0;
+      state.discount = 0;
+    },
+    addPromoCode: (state, action) => {
+      const pCode = action.payload;
+      const prom = state.promoCodes.find((promocode) => promocode.pC === pCode);
+      state.discount = prom ? prom.discount : 0;
     },
   },
 });
+export const selectCartTotal = (state) =>
+  state.cart.products.reduce((sum, p) => sum + p.price * p.quantity, 0);
 
-export const { addProduct, deleteProduct, clearCart, totalDeleteProduct } =
-  cartSlice.actions;
+export const selectCartQuantity = (state) =>
+  state.cart.products.reduce((total, p) => total + p.quantity, 0);
+
+export const selectCartTotalWithDiscount = (state) => {
+  const total = selectCartTotal(state);
+  const discounted = total - (total / 100) * state.cart.discount;
+  return discounted > 0 ? discounted : 0;
+};
+
+export const {
+  addProduct,
+  deleteProduct,
+  cleanCart,
+  totalDeleteProduct,
+  addPromoCode,
+} = cartSlice.actions;
 export default cartSlice.reducer;

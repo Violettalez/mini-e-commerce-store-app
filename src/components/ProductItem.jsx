@@ -1,6 +1,9 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { addProduct } from "../store/cartSlice";
 
 const ProductItem = ({ product }) => {
+  const dispatch = useDispatch();
   return (
     <div className="p-4 rounded-xl flex flex-col justify-between w-[32%] shadow-xl">
       <div className="flex flex-col">
@@ -21,7 +24,13 @@ const ProductItem = ({ product }) => {
         <p className=" text-sm text-yellow-500">Rating: {product.rating}⭐</p>
       </div>
 
-      <button className="mt-4 bg-basic-red text-white py-2 px-4 rounded hover:bg-dark-red">
+      <button
+        className="mt-4 bg-basic-red text-white py-2 px-4 rounded hover:bg-dark-red"
+        onClick={() => {
+          dispatch(addProduct(product));
+          console.log("Product added in cart!");
+        }}
+      >
         Add to Cart
       </button>
     </div>

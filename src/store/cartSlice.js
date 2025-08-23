@@ -9,8 +9,12 @@ const cartSlice = createSlice({
       { pC: "VIOLETTA27", discount: 15 },
     ],
     discount: 0,
+    delivery: 0,
   },
   reducers: {
+    setDelivery: (state, action) => {
+      state.delivery = action.payload;
+    },
     addProduct: (state, action) => {
       const existing = state.products.find((p) => p.id === action.payload.id);
       if (existing) {
@@ -41,6 +45,7 @@ const cartSlice = createSlice({
     cleanCart: (state) => {
       state.products = [];
       state.discount = 0;
+      state.delivery = 0;
     },
     addPromoCode: (state, action) => {
       const pCode = action.payload;
@@ -58,7 +63,7 @@ export const selectCartQuantity = (state) =>
 export const selectCartTotalWithDiscount = (state) => {
   const total = selectCartTotal(state);
   const discounted = total - (total / 100) * state.cart.discount;
-  return discounted > 0 ? discounted : 0;
+  return discounted > 0 ? discounted + state.cart.delivery : 0;
 };
 
 export const {
@@ -67,5 +72,6 @@ export const {
   cleanCart,
   totalDeleteProduct,
   addPromoCode,
+  setDelivery,
 } = cartSlice.actions;
 export default cartSlice.reducer;

@@ -5,6 +5,7 @@ import {
   totalDeleteProduct,
   addPromoCode,
   cleanCart,
+  setDelivery,
 } from "../store/cartSlice";
 import { MdDeleteForever } from "react-icons/md";
 import { FaSquarePlus, FaSquareMinus } from "react-icons/fa6";
@@ -17,7 +18,7 @@ import {
 import { useState } from "react";
 
 function Cart({ data }) {
-  const { products, discount } = useSelector((state) => state.cart);
+  const { products, discount, delivery } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const sum = useSelector(selectCartTotal);
   const totalQ = useSelector(selectCartQuantity);
@@ -78,7 +79,7 @@ function Cart({ data }) {
       </div>
 
       <div className="fixed right-20 bg-dark-weight min-h-[80vh] w-[25%] rounded-xl flex flex-col py-6 px-[15px] text-white">
-        <div className="flex gap-2 mb-6">
+        <div className="flex gap-2 mb-3">
           <input
             type="text"
             placeholder="PromoCode"
@@ -125,7 +126,15 @@ function Cart({ data }) {
             Delivery
           </summary>
           <div className="flex flex-col gap-2">
-            <div className="flex items-center justify-between rounded-xl border border-gray-700/60 p-2 hover:border-basic-red transition">
+            <div
+              className={`flex items-center justify-between rounded-xl p-2 transition 
+    ${
+      delivery === 150
+        ? "border-basic-red border-2"
+        : "border border-gray-700/60 hover:border-basic-red hover:border-2"
+    }`}
+              onClick={() => dispatch(setDelivery(150))}
+            >
               <div>
                 <p className="font-medium text-basic-black">
                   Standard Delivery
@@ -135,7 +144,15 @@ function Cart({ data }) {
               <span className="font-semibold text-basic-black">₴150</span>
             </div>
 
-            <div className="flex items-center justify-between rounded-xl border border-gray-700/60 p-2 hover:border-basic-red transition">
+            <div
+              className={`flex items-center justify-between rounded-xl p-2 transition 
+    ${
+      delivery === 350
+        ? "border-basic-red border-2"
+        : "border border-gray-700/60 hover:border-basic-red hover:border-2"
+    }`}
+              onClick={() => dispatch(setDelivery(350))}
+            >
               <div>
                 <p className="font-medium text-basic-black">Express Delivery</p>
                 <p className="text-sm text-gray-400">1–2 days</p>
@@ -143,7 +160,14 @@ function Cart({ data }) {
               <span className="font-semibold text-basic-black">₴350</span>
             </div>
 
-            <div className="flex items-center justify-between rounded-xl border border-gray-700/60 p-2 hover:border-basic-red transition">
+            <div
+              className={`flex items-center justify-between rounded-xl p-2 transition 
+    ${delivery === 0 
+      ? "border-basic-red border-2" 
+      : "border border-gray-700/60 hover:border-basic-red hover:border-2"
+    }`}
+              onClick={() => dispatch(setDelivery(0))}
+            >
               <div>
                 <p className="font-medium text-basic-black">Pickup Point</p>
                 <p className="text-sm text-gray-400">2–3 days</p>

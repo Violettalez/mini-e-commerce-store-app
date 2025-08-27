@@ -5,15 +5,17 @@ const favouritesSlice = createSlice({
     products: [],
   },
   reducers: {
-    addProduct: (state, action) => {
+    addProductFav: (state, action) => {
       state.products.push(action.payload);
     },
-    deleteProduct: (state, action) => {
+    deleteProductFav: (state, action) => {
       state.products = state.products.filter(
         (product) => product.id !== action.payload
       );
     },
   },
 });
-export const { addProduct, deleteProduct } = favouritesSlice.actions;
+export const getFavStatus = (productId) => (state) =>
+  state.favourites.products.some((pr) => pr.id === productId);
+export const { addProductFav, deleteProductFav } = favouritesSlice.actions;
 export default favouritesSlice.reducer;

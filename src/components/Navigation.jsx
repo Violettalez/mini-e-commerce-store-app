@@ -9,7 +9,7 @@ import {
 function Navigation({ data }) {
   const totalQ = useSelector(selectCartQuantity);
   return (
-    <nav className="fixed top-0 left-0 w-full bg-basic-weight py-4 px-25 flex justify-between items-center z-100">
+    <nav className="fixed top-0 left-0 w-full bg-basic-weight py-4 px-25 flex justify-between items-center z-100 shadow-lg">
       <img src="/long-logo.svg" alt="logo" draggable="false" />
       <ul className="flex gap-15 items-center *:text-lg *:hover:border-b-3 *:hover:border-basic-red *:font-header *:hover:cursor-pointer">
         <li>

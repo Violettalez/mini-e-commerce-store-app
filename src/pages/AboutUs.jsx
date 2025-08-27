@@ -1,9 +1,9 @@
 function AboutUs({ data }) {
   return (
-    <div>
-      <section class="bg-dark-red text-basic-weight pt-15 pb-10 text-center rounded-b-xl">
-        <h2 class="text-4xl font-bold mb-4 font-header">About Us</h2>
-        <p class="max-w-2xl mx-auto text-lg">
+    <div className="mt-10 px-5">
+      <section className="w-full py-6 bg-gradient-to-r from-basic-red via-dark-red to-basic-black text-center rounded-2xl shadow-lg *:text-basic-weight">
+        <h2 class="text-4xl font-bold font-header">About Us</h2>
+        <p class="max-w-2xl mx-auto">
           Welcome to <span class="font-semibold">eStore</span> – your trusted
           online shop for premium and branded fashion.
         </p>

@@ -11,6 +11,7 @@ import {
   addBrand,
   removeBrand,
   setEndPrice,
+  setStartPrice,
 } from "../store/filtersSlice";
 import axios from "axios";
 
@@ -197,7 +198,7 @@ function Home() {
                   let value = Number(e.target.value);
                   if (value < 0) value = 0;
                   if (value > endPrice) value = endPrice;
-                  dispatch(setStartPrice(Number(e.target.value)));
+                  dispatch(setStartPrice(value));
                 }}
               />
               <p>to:</p>

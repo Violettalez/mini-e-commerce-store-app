@@ -17,6 +17,7 @@ import axios from "axios";
 function Home() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [maxPrice, setMaxPrice] = useState(0);
 
   const dispatch = useDispatch();
   const selectedCategories = useSelector((state) => state.filters.category);
@@ -80,7 +81,6 @@ function Home() {
       return [];
     }
   };
-  let maxPrice = 0;
   useEffect(() => {
     const getProducts = async () => {
       setLoading(true);
@@ -88,8 +88,9 @@ function Home() {
       setProducts(prods);
 
       if (prods.length > 0) {
-        maxPrice = Math.max(...prods.map((p) => p.price));
-        dispatch(setEndPrice(maxPrice));
+        const max = Math.max(...prods.map((p) => p.price));
+        setMaxPrice(max);
+        dispatch(setEndPrice(max));
       }
 
       setLoading(false);
@@ -144,7 +145,7 @@ function Home() {
               name="sorting"
               className="accent-basic-red"
               checked={sorting === "none"}
-              onClick={() => dispatch(setSorting("none"))}
+              onChange={() => dispatch(setSorting("none"))}
             />
             <span>None</span>
           </label>
@@ -153,7 +154,7 @@ function Home() {
               type="radio"
               name="sorting"
               className="accent-basic-red"
-              onClick={() => dispatch(setSorting("price-low-to-high"))}
+              onChange={() => dispatch(setSorting("price-low-to-high"))}
             />
             <span>Price: Low to High</span>
           </label>
@@ -162,7 +163,7 @@ function Home() {
               type="radio"
               name="sorting"
               className="accent-basic-red"
-              onClick={() => dispatch(setSorting("price-high-to-low"))}
+              onChange={() => dispatch(setSorting("price-high-to-low"))}
             />
             <span>Price: High to Low</span>
           </label>
@@ -171,7 +172,7 @@ function Home() {
               type="radio"
               name="sorting"
               className="accent-basic-red"
-              onClick={() => dispatch(setSorting("top-rated"))}
+              onChange={() => dispatch(setSorting("top-rated"))}
             />
             <span>Top Rated</span>
           </label>
@@ -182,7 +183,7 @@ function Home() {
           <h2 className="font-header text-xl font-bold mb-2">Filters</h2>
 
           {/* Price filter */}
-          <details className="flex flex-col gap-2" open="true">
+          <details className="flex flex-col gap-2" open={true}>
             <summary>Price</summary>
             <div className="flex w-full justify-start gap-2">
               <p>from :</p>
@@ -190,10 +191,13 @@ function Home() {
                 type="number"
                 className="border rounded px-2 h-7 w-20"
                 value={startPrice}
-                min="0"
+                min={0}
                 max={maxPrice}
                 onChange={(e) => {
-                  dispatch(setStartPrice(e.target.value));
+                  let value = Number(e.target.value);
+                  if (value < 0) value = 0;
+                  if (value > endPrice) value = endPrice;
+                  dispatch(setStartPrice(Number(e.target.value)));
                 }}
               />
               <p>to:</p>
@@ -201,11 +205,14 @@ function Home() {
                 type="number"
                 className="border rounded px-2 h-7 w-20"
                 value={endPrice}
-                onChange={(e) => {
-                  dispatch(setEndPrice(e.target.value));
-                }}
-                max={maxPrice}
                 min={startPrice}
+                max={maxPrice}
+                onChange={(e) => {
+                  let value = Number(e.target.value);
+                  if (value > maxPrice) value = maxPrice;
+                  if (value < startPrice) value = startPrice;
+                  dispatch(setEndPrice(value));
+                }}
               />
             </div>
           </details>
@@ -220,7 +227,7 @@ function Home() {
                     type="checkbox"
                     className="accent-basic-red"
                     checked={selectedCategories.includes(cat)}
-                    onClick={() => handleCheckBoxCategoryChange(cat)}
+                    onChange={() => handleCheckBoxCategoryChange(cat)}
                   />
                   <p>{cat}</p>
                 </li>
@@ -238,7 +245,7 @@ function Home() {
                     type="checkbox"
                     className="accent-basic-red"
                     checked={selectedBrands.includes(brand)}
-                    onClick={() => handleCheckBoxBrandChange(brand)}
+                    onChange={() => handleCheckBoxBrandChange(brand)}
                   />
                   <p>{brand}</p>
                 </li>

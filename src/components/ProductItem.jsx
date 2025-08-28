@@ -9,7 +9,7 @@ const ProductItem = ({ product }) => {
   const dispatch = useDispatch();
   const isFav = useSelector(getFavStatus(product.id));
   return (
-    <div className="p-4 rounded-xl flex flex-col justify-between w-[32%] shadow-xl">
+    <div className="p-4 rounded-xl flex flex-col justify-between max-h-122 shadow-xl">
       <div className="flex flex-col relative">
         <img
           src={product.picture}
@@ -31,7 +31,7 @@ const ProductItem = ({ product }) => {
         <p className=" text-sm text-gray-400 mb-2">
           Category: {product.category}
         </p>
-        <p className=" text-sm mb-2">{product.description}</p>
+        <p className=" text-sm mb-2 line-clamp-2">{product.description}</p>
         <p className=" text-lg font-bold mb-2">₴{product.price}</p>
         <p className=" text-sm text-yellow-500">Rating: {product.rating}⭐</p>
       </div>

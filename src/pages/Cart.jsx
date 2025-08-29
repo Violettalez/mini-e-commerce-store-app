@@ -1,4 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
+import { addOrders } from "../store/ordersSlice";
+import { useNavigate } from "react-router-dom";
 import {
   addProduct,
   deleteProduct,
@@ -20,6 +22,7 @@ import { useState } from "react";
 function Cart({ data }) {
   const { products, discount, delivery } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const sum = useSelector(selectCartTotal);
   const totalQ = useSelector(selectCartQuantity);
   const [promoCode, setPromoCode] = useState("");
@@ -162,9 +165,10 @@ function Cart({ data }) {
 
             <div
               className={`flex items-center justify-between rounded-xl p-2 transition 
-    ${delivery === 0 
-      ? "border-basic-red border-2" 
-      : "border border-gray-700/60 hover:border-basic-red hover:border-2"
+    ${
+      delivery === 0
+        ? "border-basic-red border-2"
+        : "border border-gray-700/60 hover:border-basic-red hover:border-2"
     }`}
               onClick={() => dispatch(setDelivery(0))}
             >
@@ -180,6 +184,28 @@ function Cart({ data }) {
         <button
           className="w-full py-3 mt-auto  rounded-xl bg-basic-red font-semibold hover:bg-red-700 transition disabled:bg-dark-weight disabled:border-1 disabled:border-basic-red disabled:text-basic-red"
           disabled={totalQ < 1}
+          onClick={() => {
+            console.log({
+              products: products,
+              discount: discount,
+              delivery: delivery,
+              sum: sum,
+              totalQ: totalQ,
+              totalWithDiscount: totalWithDiscount,
+            });
+            dispatch(
+              addOrders({
+                products: products,
+                discount: discount,
+                delivery: delivery,
+                sum: sum,
+                totalQ: totalQ,
+                totalWithDiscount: totalWithDiscount,
+              })
+            );
+            dispatch(cleanCart());
+            navigate("/orders");
+          }}
         >
           Apply order
         </button>

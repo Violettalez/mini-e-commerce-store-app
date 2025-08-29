@@ -9,12 +9,15 @@ const ordersSlice = createSlice({
       let dateToday = Date.now();
       state.orders.push({
         ...action.payload,
+        id: Math.floor(100000 + Math.random() * 900000),
         date: dateToday,
         status: "In processing",
       });
     },
     deleteOrders: (state, action) => {
-      state.orders = state.orders.filter((order) => order.date !== action.payload);
+      state.orders = state.orders.filter(
+        (order) => order.id !== action.payload
+      );
     },
   },
 });

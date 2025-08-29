@@ -1,7 +1,7 @@
 function AboutUs({ data }) {
   return (
-    <div className="mt-10 px-5">
-      <section className="w-full py-6 bg-gradient-to-r from-basic-red via-dark-red to-basic-black text-center rounded-2xl shadow-lg *:text-basic-weight">
+    <div className="mt-10 md:px-5">
+      <section className="w-full py-10 md:py-6 bg-gradient-to-r from-basic-red via-dark-red to-basic-black text-center rounded-2xl shadow-lg *:text-basic-weight">
         <h2 class="text-4xl font-bold font-header">About Us</h2>
         <p class="max-w-2xl mx-auto">
           Welcome to <span class="font-semibold">eStore</span> – your trusted
@@ -9,14 +9,14 @@ function AboutUs({ data }) {
         </p>
       </section>
       <div className="flex flex-row items-center justify-center gap-8 px-6 py-12">
-        <div className="flex-1 flex justify-center">
+        <div className="hidden lg:block flex-1 flex justify-center">
           <img
             src="/sport-girl.png"
             alt="sport girl"
             className="max-h-[600px] object-contain"
           />
         </div>
-        <div className="flex-2 max-w-4xl space-y-6">
+        <div className="lg:flex-2 max-w-4xl space-y-6">
           <div className="bg-basic-weight p-8 rounded-2xl shadow-lg">
             <h3 className="text-2xl font-semibold text-basic-red mb-4 font-header">
               Who We Are
@@ -74,7 +74,7 @@ function AboutUs({ data }) {
           </div>
         </div>
 
-        <div className="flex-1 flex justify-center">
+        <div className="hidden lg:block flex-1 flex justify-center">
           <img
             src="/sport-boy.png"
             alt="sport boy"

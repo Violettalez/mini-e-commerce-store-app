@@ -13,7 +13,7 @@ function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <div className="w-full min-h-screen py-5 px-20">
+        <div className="w-full min-h-screen py-5 md:px-20">
           <Navigation />
           <Routes>
             <Route path="/" element={<Home />} />

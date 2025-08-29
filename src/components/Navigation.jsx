@@ -1,17 +1,22 @@
+import { useState } from "react";
 import { IoHeartSharp } from "react-icons/io5";
 import { PiShoppingCartFill } from "react-icons/pi";
 import { FaBoxOpen } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import {
-  selectCartQuantity,
-} from "../store/cartSlice";
+import { CgMenuGridR } from "react-icons/cg";
+import { selectCartQuantity } from "../store/cartSlice";
+
 function Navigation({ data }) {
   const totalQ = useSelector(selectCartQuantity);
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <nav className="fixed top-0 left-0 w-full bg-basic-weight py-4 px-25 flex justify-between items-center z-100 shadow-lg">
+    <nav className="fixed top-0 left-0 w-full bg-basic-weight py-4 px-4 md:px-25 flex justify-between items-center z-[100] shadow-lg">
       <img src="/long-logo.svg" alt="logo" draggable="false" />
-      <ul className="flex gap-15 items-center *:text-lg *:hover:border-b-3 *:hover:border-basic-red *:font-header *:hover:cursor-pointer">
+
+      {/* Десктопное меню */}
+      <ul className="hidden md:flex gap-15 items-center *:text-lg *:hover:border-b-3 *:hover:border-basic-red *:font-header *:hover:cursor-pointer">
         <li>
           <Link to="/">Home</Link>
         </li>
@@ -30,7 +35,7 @@ function Navigation({ data }) {
             Cart
             {totalQ > 0 ? (
               <div className="flex flex-col justify-center rounded-full w-4 h-4 absolute right-[-12px] top-[-2px] text-sm text-center bg-basic-red font-bold text-basic-weight">
-                <p className="w-full text-sm text-cente font-bold text-basic-weight">
+                <p className="w-full text-sm font-bold text-basic-weight">
                   {totalQ}
                 </p>
               </div>
@@ -44,7 +49,49 @@ function Navigation({ data }) {
           </Link>
         </li>
       </ul>
+
+      {/* Иконка для планшета/телефона */}
+      <CgMenuGridR
+        className="block md:hidden text-3xl cursor-pointer"
+        onClick={() => setIsOpen(true)}
+      />
+
+      {/* Мобильное меню */}
+      <div
+        className={`fixed top-0 left-0 w-full h-full bg-basic-weight z-[200] flex flex-col items-center px-10 justify-center gap-8 text-2xl font-header transition-transform duration-500 ${
+          isOpen ? "translate-y-0" : "-translate-y-full"
+        }`}
+      >
+        <button
+          className="absolute top-6 right-6 text-3xl text-basic-red"
+          onClick={() => setIsOpen(false)}
+        >
+          ✕
+        </button>
+        <img src="/long-logo.svg" alt="logo" draggable="false" />
+        <Link to="/" onClick={() => setIsOpen(false)}>Home</Link>
+        <Link to="/about" onClick={() => setIsOpen(false)}>About us</Link>
+        <Link to="/favorites" onClick={() => setIsOpen(false)} className="flex items-center gap-2">
+          <IoHeartSharp className="text-2xl text-basic-red" />
+          Favorites
+        </Link>
+        <Link to="/cart" onClick={() => setIsOpen(false)} className="flex items-center gap-2 relative">
+          <PiShoppingCartFill className="text-2xl" />
+          Cart
+          {totalQ > 0 && (
+            <span className="absolute -top-2 -right-3 bg-basic-red text-white text-xs font-bold rounded-full px-2 py-0.5">
+              {totalQ}
+            </span>
+          )}
+        </Link>
+        <Link to="/orders" onClick={() => setIsOpen(false)} className="flex items-center gap-2">
+          <FaBoxOpen className="text-2xl" />
+          Orders
+        </Link>
+      </div>
     </nav>
   );
 }
+
 export default Navigation;
+

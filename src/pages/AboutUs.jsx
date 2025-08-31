@@ -9,7 +9,7 @@ function AboutUs({ data }) {
         </p>
       </section>
       <div className="flex flex-row items-center justify-center gap-8 px-6 py-12">
-        <div className="hidden lg:block flex-1 flex justify-center">
+        <div className="hidden lg:flex flex-1 justify-center">
           <img
             src="/sport-girl.png"
             alt="sport girl"
@@ -74,7 +74,7 @@ function AboutUs({ data }) {
           </div>
         </div>
 
-        <div className="hidden lg:block flex-1 flex justify-center">
+        <div className="hidden lg:flex flex-1 justify-center">
           <img
             src="/sport-boy.png"
             alt="sport boy"

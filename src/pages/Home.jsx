@@ -122,7 +122,7 @@ function Home() {
 
   return (
     <div className="flex bg-basic-weight w-full min-h-[85vh] rounded-xl pt-10">
-      <section className="bg-dark-weight flex-1 py-5 px-5 rounded-xl flex flex-col gap-10">
+      <section className="hidden bg-dark-weight flex-1 py-5 px-5 rounded-xl md:flex flex-col gap-10">
         {/* Search */}
         <div className="relative w-full max-w-sm">
           <BsSearchHeart
@@ -257,7 +257,7 @@ function Home() {
       </section>
 
       {/* Products */}
-      <div className="flex-4 py-5 px-10 grid grid-cols-3 gap-4">
+      <div className="flex-4 py-5 px-10 grid md:grid-cols-3 gap-4">
         {loading ? (
           <div>Loading products...</div>
         ) : filterProducts().length > 0 ? (

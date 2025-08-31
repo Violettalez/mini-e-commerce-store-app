@@ -26,14 +26,14 @@ function Orders({ data }) {
             <summary className="font-extrabold text-xl">
               Order №{ord.id}
             </summary>
-            <div className="flex items-center justify-between">
+            <div className="mb-2 md:mb-0 mt-2 md:mt-0 flex flex-col gap-1 md:flex-row items-start md:items-center justify-between">
               <p>Date: {new Date(ord.date).toLocaleDateString()}</p>
               <p>Status: {ord.status}</p>
               <p>Delivery: ₴{ord.delivery}</p>
               <p>Discount: {ord.discount}%</p>
               <p>Total: ₴{ord.totalWithDiscount}</p>
               <button
-                className="bg-basic-red text-white py-2 px-4 rounded hover:bg-dark-red"
+                className=" bg-basic-red text-white py-2 px-4 rounded hover:bg-dark-red"
                 onClick={() => dispatch(deleteOrders(ord.id))}
               >
                 Cancel order
@@ -42,7 +42,7 @@ function Orders({ data }) {
 
             {ord.products.map((product) => (
               <div
-                className="flex flex-row items-center shadow-xl rounded-xl justify-between py-4 px-[2%] gap-6"
+                className="flex flex-col md:flex-row items-center shadow-xl rounded-xl justify-between py-4 px-[2%] gap-6"
                 key={product.id}
               >
                 <img

@@ -20,7 +20,7 @@ function Favorites({ data }) {
       </div>
 
       {products.length !== 0 ? (
-        <div className="grid grid-cols-4 gap-10 pt-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 md:gap-5 lg:gap-10 pt-4">
           {products.map((product) => (
             <div
               className="flex flex-col items-center shadow-xl rounded-xl justify-between py-4 px-[10%] gap-4 mb-4"
@@ -36,11 +36,11 @@ function Favorites({ data }) {
                 <h2 className="text-lg font-semibold font-header">
                   {product.title}
                 </h2>
-                <p className="text-sm text-gray-500">Brand: {product.brand}</p>
-                <p className="text-sm text-gray-400">
+                <p className="text-xs md:text-sm text-gray-500">Brand: {product.brand}</p>
+                <p className="text-xs md:text-sm text-gray-400">
                   Category: {product.category}
                 </p>
-                <p className="text-lg font-bold">₴{product.price}</p>
+                <p className="mt-1 md:mt-0 text-lg font-bold">₴{product.price}</p>
                 <p className="text-sm text-yellow-500">
                   Rating: {product.rating}⭐
                 </p>
@@ -56,7 +56,7 @@ function Favorites({ data }) {
                 Buy now
               </button>
               <button
-                className="text-sm text-gray-400 py-1 cursor-pointer"
+                className="text-sm text-gray-400  md:py-1 cursor-pointer"
                 onClick={() => dispatch(deleteProductFav(product.id))}
               >
                 Remove from Favourites

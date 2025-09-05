@@ -29,7 +29,7 @@ function Cart({ data }) {
   const totalWithDiscount = useSelector(selectCartTotalWithDiscount);
   return (
     <div className="flex flex-row gap-6 pt-10">
-      <div className="flex flex-col gap-4 w-[63vw] pt-4">
+      <div className="hidden md:flex flex-col gap-4 w-[63vw] pt-4">
         {products.length !== 0 ? (
           products.map((product) => (
             <div
@@ -81,7 +81,7 @@ function Cart({ data }) {
         )}
       </div>
 
-      <div className="fixed right-20 bg-dark-weight min-h-[80vh] w-[25%] rounded-xl flex flex-col py-6 px-[15px] text-white">
+      <div className="w-full md:fixed md:right-20 bg-dark-weight min-h-[80vh] md:w-[25%] rounded-xl flex flex-col py-6 px-[15px] text-white">
         <div className="flex gap-2 mb-3">
           <input
             type="text"
@@ -215,6 +215,62 @@ function Cart({ data }) {
         >
           Clean Cart
         </button>
+        <details className="md:hidden">
+          <summary className="text-xl font-semibold mb-3 border-b text-basic-black">
+            Product List
+          </summary>
+          <div className="flex flex-col gap-4 w-full pt-4">
+            {products.length !== 0 ? (
+              products.map((product) => (
+                <div
+                  className="flex flex-col items-center shadow-xl rounded-xl justify-between py-4 px-[2%] gap-2 *:text-basic-black"
+                  key={product.id}
+                >
+                  <img
+                    src={product.picture}
+                    alt={product.title}
+                    className="w-[100px] h-[100px] object-cover mb-4 rounded flex-1"
+                    draggable="false"
+                  />
+                  <div className="flex flex-col gap-0.5">
+                    <h2 className="text-lg font-semibold font-header">
+                      {product.title}
+                    </h2>
+                    <p className=" text-sm text-gray-500">
+                      Brand: {product.brand}
+                    </p>
+                    <p className=" text-sm text-gray-400">
+                      Category: {product.category}
+                    </p>
+                    <p className=" text-center text-3xl font-bold py-2"> ₴{product.price}</p>
+                  </div>
+                  <div className="flex gap-3 items-center flex-1 justify-center">
+                    <FaSquareMinus
+                      className="text-4xl cursor-pointer text-gray-400"
+                      onClick={() => dispatch(deleteProduct(product.id))}
+                    />
+                    <p className="text-xl">{product.quantity}</p>
+                    <FaSquarePlus
+                      className="text-4xl cursor-pointer text-gray-400"
+                      onClick={() => dispatch(addProduct(product))}
+                    />
+                    <MdDeleteForever
+                      className="cursor-pointer text-basic-red text-4xl"
+                      onClick={() => dispatch(totalDeleteProduct(product.id))}
+                    />
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="flex flex-col items-center justify-center py-[20%]">
+                <FaBoxes className="text-6xl text-basic-red opacity-50" />
+                <p className="font-bold opacity-50 text-gray-400">
+                  No products in your cart!
+                </p>
+              </div>
+            )}
+          </div>
+        </details>
       </div>
     </div>
   );

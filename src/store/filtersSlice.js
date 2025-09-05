@@ -9,6 +9,7 @@ const filtersSlise = createSlice({
     brand: [],
     startPrice: 0,
     endPrice: 0,
+    maxPrice: 0,
   },
   reducers: {
     setSearchString: (state, action) => {
@@ -23,6 +24,10 @@ const filtersSlise = createSlice({
     setEndPrice: (state, action) => {
       state.endPrice = action.payload;
     },
+    setMaxPrice: (state, action) => {
+      state.maxPrice = action.payload;
+    },
+
     addCategory: (state, action) => {
       if (!state.category.includes(action.payload)) {
         state.category.push(action.payload);
@@ -59,5 +64,6 @@ export const {
   addBrand,
   removeBrand,
   clearFilters,
+  setMaxPrice,
 } = filtersSlise.actions;
 export default filtersSlise.reducer;

@@ -13,7 +13,7 @@ import {
   clearFilters,
 } from "../store/filtersSlice";
 
-function FiltersPanel({sortingName}) {
+function FiltersPanel({ sortingName }) {
   const dispatch = useDispatch();
   const {
     category: selectedCategories,
@@ -65,7 +65,7 @@ function FiltersPanel({sortingName}) {
   };
 
   const handleSortingChange = (value) => {
-      dispatch(setSorting(value));
+    dispatch(setSorting(value));
   };
 
   useEffect(() => {
@@ -109,7 +109,7 @@ function FiltersPanel({sortingName}) {
             <span className="text-xl md:text-base">{option.label}</span>
           </label>
         ))}
-        </div>
+      </div>
 
       {/* Filters */}
       <div className="flex flex-col gap-5 md:gap-2">
@@ -126,11 +126,17 @@ function FiltersPanel({sortingName}) {
               value={startPrice}
               min={0}
               max={endPrice}
+              onFocus={(e) => e.target.select()}
               onChange={(e) => {
-                let value = Number(e.target.value);
-                if (value < 0) value = 0;
-                if (value > endPrice) value = endPrice;
-                dispatch(setStartPrice(value));
+                let value = e.target.value;
+                if (value.length > 1 && value.startsWith("0")) {
+                  value = value.replace(/^0+/, "");
+                }
+                let num = Number(value);
+                if (isNaN(num)) num = 0;
+                if (num < 0) num = 0;
+                if (num > endPrice) num = endPrice;
+                dispatch(setStartPrice(num));
               }}
             />
             <p>to:</p>
@@ -138,13 +144,19 @@ function FiltersPanel({sortingName}) {
               type="number"
               className="border rounded px-2 h-7 w-20"
               value={endPrice}
-              min={startPrice+1}
+              min={startPrice + 1}
               max={maxPrice}
+              onFocus={(e) => e.target.select()}
               onChange={(e) => {
-                let value = Number(e.target.value);
-                if (value < startPrice) value = startPrice;
-                if (value > maxPrice) value = maxPrice;
-                dispatch(setEndPrice(value));
+                let value = e.target.value;
+                if (value.length > 1 && value.startsWith("0")) {
+                  value = value.replace(/^0+/, "");
+                }
+                let num = Number(value);
+                if (isNaN(num)) num = startPrice + 1;
+                if (num < startPrice) num = startPrice;
+                if (num > maxPrice) num = maxPrice;
+                dispatch(setEndPrice(num));
               }}
             />
           </div>

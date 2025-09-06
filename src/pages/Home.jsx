@@ -72,7 +72,6 @@ function Home() {
         dispatch(setMaxPrice(max));
         dispatch(setEndPrice(max));
       }
-
       setLoading(false);
     };
 
@@ -82,9 +81,8 @@ function Home() {
   return (
     <div className="flex bg-basic-weight w-full min-h-[85vh] rounded-xl pt-10">
       <section className="hidden bg-dark-weight flex-1.5 py-5 px-5 rounded-xl md:flex flex-col gap-10">
-        <FiltersPanel />
+        <FiltersPanel sortingName={"sorting"}/>
       </section>
-
       {/* Products */}
       <div className="flex-4 py-5 px-10 grid md:grid-cols-3 gap-4">
         {loading ? (

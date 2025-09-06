@@ -127,7 +127,7 @@ function Navigation({ data }) {
 
       <div
         className={`fixed top-0 left-0 w-full h-full bg-basic-weight z-[200] flex flex-col items-center px-10 justify-center gap-8 text-2xl font-header transition-transform duration-500 ${
-          isOpenFilter ? "translate-y-0" : "-translate-y-full"
+          isOpenFilter ? "translate-y-0 " : "-translate-y-full" 
         }`}
       >
         <button
@@ -136,7 +136,7 @@ function Navigation({ data }) {
         >
           ✕
         </button>
-        <FiltersPanel />
+        <FiltersPanel sortingName={"sortingMob"}/>
       </div>
     </nav>
   );

@@ -1,5 +1,6 @@
 import { BsSearchHeart } from "react-icons/bs";
 import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
 import {
   setSearchString,
   setSorting,
@@ -12,29 +13,17 @@ import {
   clearFilters,
 } from "../store/filtersSlice";
 
-function FiltersPanel() {
+function FiltersPanel({sortingName}) {
   const dispatch = useDispatch();
-  const selectedCategories = useSelector((state) => state.filters.category);
-  const selectedBrands = useSelector((state) => state.filters.brand);
-  const { searchString, sorting, startPrice, endPrice, maxPrice } = useSelector(
-    (state) => state.filters
-  );
-
-  const handleCheckBoxCategoryChange = (category) => {
-    if (selectedCategories.includes(category)) {
-      dispatch(removeCategory(category));
-    } else {
-      dispatch(addCategory(category));
-    }
-  };
-
-  const handleCheckBoxBrandChange = (brand) => {
-    if (selectedBrands.includes(brand)) {
-      dispatch(removeBrand(brand));
-    } else {
-      dispatch(addBrand(brand));
-    }
-  };
+  const {
+    category: selectedCategories,
+    brand: selectedBrands,
+    sorting,
+    searchString,
+    startPrice,
+    endPrice,
+    maxPrice,
+  } = useSelector((state) => state.filters);
 
   const categories = [
     "T-Shirts",
@@ -56,8 +45,39 @@ function FiltersPanel() {
     "Lululemon",
   ];
 
+  const sortingOptions = [
+    { value: "none", label: "None" },
+    { value: "price-low-to-high", label: "Price: Low to High" },
+    { value: "price-high-to-low", label: "Price: High to Low" },
+    { value: "top-rated", label: "Top Rated" },
+  ];
+
+  const handleCheckBoxCategoryChange = (cat) => {
+    selectedCategories.includes(cat)
+      ? dispatch(removeCategory(cat))
+      : dispatch(addCategory(cat));
+  };
+
+  const handleCheckBoxBrandChange = (brand) => {
+    selectedBrands.includes(brand)
+      ? dispatch(removeBrand(brand))
+      : dispatch(addBrand(brand));
+  };
+
+  const handleSortingChange = (value) => {
+      dispatch(setSorting(value));
+  };
+
+  useEffect(() => {
+    // Принудительно обновляем checked состояние
+    const radio = document.querySelector(`input[value="${sorting}"]`);
+    if (radio) {
+      radio.checked = true;
+    }
+  }, [sorting]);
+
   return (
-    <div className="flex flex-col gap-10 w-full h-full overflow-y-auto px-1 md:px-5 py-5 ">
+    <div className="flex flex-col gap-10 w-full h-full overflow-y-auto px-1 md:px-5 py-5">
       {/* Search */}
       <div className="relative w-full">
         <BsSearchHeart
@@ -67,63 +87,36 @@ function FiltersPanel() {
         <input
           type="text"
           placeholder="Search products..."
-          className="w-[90%] text-xl md:text-base md:w-full rounded-xl border bg-basic-weight border-gray-300 py-2 pl-10 pr-4 text-gray-700 focus:border-basic-red focus:ring-2 focus:ring-basic-red outline-none transition"
-          onChange={(e) => dispatch(setSearchString(e.target.value))}
+          className="w-[90%] md:w-full text-xl md:text-base rounded-xl border bg-basic-weight border-gray-300 py-2 pl-10 pr-4 text-gray-700 focus:border-basic-red focus:ring-2 focus:ring-basic-red outline-none transition"
           value={searchString}
+          onChange={(e) => dispatch(setSearchString(e.target.value))}
         />
       </div>
 
       {/* Sorting */}
       <div className="flex flex-col gap-2">
         <h2 className="font-header text-xl font-bold mb-1">Sorting</h2>
-        <label className="flex items-center gap-2">
-          <input
-            type="radio"
-            name="sorting"
-            className="accent-basic-red"
-            checked={sorting === "none"}
-            onChange={() => dispatch(setSorting("none"))}
-          />
-          <span className="text-xl md:text-base">None</span>
-        </label>
-        <label className="flex items-center gap-2">
-          <input
-            type="radio"
-            name="sorting"
-            className="accent-basic-red"
-            checked={sorting === "price-low-to-high"}
-            onChange={() => dispatch(setSorting("price-low-to-high"))}
-          />
-          <span className="text-xl md:text-base">Price: Low to High</span>
-        </label>
-        <label className="flex items-center gap-2">
-          <input
-            type="radio"
-            name="sorting"
-            className="accent-basic-red"
-            checked={sorting === "price-high-to-low"}
-            onChange={() => dispatch(setSorting("price-high-to-low"))}
-          />
-          <span className="text-xl md:text-base">Price: High to Low</span>
-        </label>
-        <label className="flex items-center gap-2">
-          <input
-            type="radio"
-            name="sorting"
-            className="accent-basic-red"
-            checked={sorting === "top-rated"}
-            onChange={() => dispatch(setSorting("top-rated"))}
-          />
-          <span className="text-xl md:text-base">Top Rated</span>
-        </label>
-      </div>
+        {sortingOptions.map((option) => (
+          <label key={option.value} className="flex items-center gap-2">
+            <input
+              type="radio"
+              name={sortingName}
+              value={option.value}
+              className="accent-basic-red"
+              checked={sorting === option.value}
+              onChange={() => handleSortingChange(option.value)}
+            />
+            <span className="text-xl md:text-base">{option.label}</span>
+          </label>
+        ))}
+        </div>
 
       {/* Filters */}
       <div className="flex flex-col gap-5 md:gap-2">
         <h2 className="font-header text-xl font-bold mb-2">Filters</h2>
 
         {/* Price filter */}
-        <details className="flex flex-col gap-2" open={true}>
+        <details className="flex flex-col gap-2" open>
           <summary className="text-xl md:text-base">Price</summary>
           <div className="flex w-full justify-start gap-2 *:text-xl *:md:text-base">
             <p>from :</p>
@@ -132,7 +125,7 @@ function FiltersPanel() {
               className="border rounded px-2 h-7 w-20"
               value={startPrice}
               min={0}
-              max={maxPrice}
+              max={endPrice}
               onChange={(e) => {
                 let value = Number(e.target.value);
                 if (value < 0) value = 0;
@@ -144,13 +137,13 @@ function FiltersPanel() {
             <input
               type="number"
               className="border rounded px-2 h-7 w-20"
-              value={maxPrice}
+              value={endPrice}
               min={startPrice}
               max={maxPrice}
               onChange={(e) => {
                 let value = Number(e.target.value);
-                if (value > maxPrice) value = maxPrice;
                 if (value < startPrice) value = startPrice;
+                if (value > maxPrice) value = maxPrice;
                 dispatch(setEndPrice(value));
               }}
             />
@@ -169,7 +162,7 @@ function FiltersPanel() {
                   checked={selectedCategories.includes(cat)}
                   onChange={() => handleCheckBoxCategoryChange(cat)}
                 />
-                <p className="text-xl md:text-base">{cat}</p>
+                <span className="text-xl md:text-base">{cat}</span>
               </li>
             ))}
           </ul>
@@ -187,16 +180,15 @@ function FiltersPanel() {
                   checked={selectedBrands.includes(brand)}
                   onChange={() => handleCheckBoxBrandChange(brand)}
                 />
-                <p className="text-xl md:text-base">{brand}</p>
+                <span className="text-xl md:text-base">{brand}</span>
               </li>
             ))}
           </ul>
         </details>
+
         <button
           className="mt-4 bg-basic-red text-white py-2 px-4 rounded hover:bg-dark-red md:text-base text-xl"
-          onClick={() => {
-            dispatch(clearFilters());
-          }}
+          onClick={() => dispatch(clearFilters())}
         >
           Clean Filters
         </button>

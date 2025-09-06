@@ -16,7 +16,7 @@ const filtersSlise = createSlice({
       state.searchString = action.payload;
     },
     setSorting: (state, action) => {
-      state.sorting = action.payload;
+      state.sorting = action.payload.toString();
     },
     setStartPrice: (state, action) => {
       state.startPrice = action.payload;

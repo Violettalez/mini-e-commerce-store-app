@@ -81,16 +81,21 @@ function Home() {
   return (
     <div className="flex bg-basic-weight w-full min-h-[85vh] rounded-xl pt-10">
       <section className="hidden bg-dark-weight flex-1.5 py-5 px-5 rounded-xl md:flex flex-col gap-10">
-        <FiltersPanel sortingName={"sorting"}/>
+        <FiltersPanel sortingName={"sorting"} />
       </section>
       {/* Products */}
       <div className="flex-4 py-5 px-10 grid md:grid-cols-3 gap-4">
         {loading ? (
-          <div>Loading products...</div>
+          <div className="flex flex-col md:col-start-2 items-center justify-center py-[20%] ml-auto mr-auto">
+            <div className="relative w-12 h-12 mx-auto">
+              <div className="absolute top-[60px] left-0 w-12 h-[5px] bg-red-400/50 rounded-full animate-shadow"></div>
+              <div className="absolute top-0 left-0 w-12 h-12 bg-basic-red rounded-[4px] animate-jump"></div>
+            </div>
+          </div>
         ) : filterProducts().length > 0 ? (
           filterProducts().map((pr) => <ProductItem product={pr} key={pr.id} />)
         ) : (
-          <div className="w-full flex flex-col items-center justify-center py-[20%] ml-auto mr-auto">
+          <div className="flex flex-col md:col-start-2 items-center justify-center py-[20%] ml-auto mr-auto">
             <FaBoxes className="text-6xl text-basic-red opacity-50" />
             <p className="font-bold opacity-50">No products available!</p>
           </div>

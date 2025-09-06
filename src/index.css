@@ -1,12 +1,44 @@
-@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap");
 @import "tailwindcss";
 
-@theme{
-    --color-basic-red:#ff0000;
-    --color-basic-black:#000000;
-    --color-basic-weight:#FFFFFF;
-    --color-dark-weight:#F9F5F5;
-    --color-dark-red:#B30000;
+@theme {
+  --color-basic-red: #ff0000;
+  --color-basic-black: #000000;
+  --color-basic-weight: #ffffff;
+  --color-dark-weight: #f9f5f5;
+  --color-dark-red: #b30000;
 
-    --font-header:"Titillium Web", sans-serif;
+  --font-header: "Titillium Web", sans-serif;
+
+  @keyframes jump {
+    15% {
+      border-bottom-right-radius: 3px;
+    }
+    25% {
+      transform: translateY(9px) rotate(22.5deg);
+    }
+    50% {
+      transform: translateY(18px) scale(1, 0.9) rotate(45deg);
+      border-bottom-right-radius: 40px;
+    }
+    75% {
+      transform: translateY(9px) rotate(67.5deg);
+    }
+    100% {
+      transform: translateY(0) rotate(90deg);
+    }
+  }
+
+  @keyframes shadow {
+    0%,
+    100% {
+      transform: scale(1, 1);
+    }
+    50% {
+      transform: scale(1.2, 1);
+    }
+  }
+
+  --animate-jump: jump 0.5s linear infinite;
+  --animate-shadow: shadow 0.5s linear infinite;
 }

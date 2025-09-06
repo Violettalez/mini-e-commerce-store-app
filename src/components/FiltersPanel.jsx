@@ -138,7 +138,7 @@ function FiltersPanel({sortingName}) {
               type="number"
               className="border rounded px-2 h-7 w-20"
               value={endPrice}
-              min={startPrice}
+              min={startPrice+1}
               max={maxPrice}
               onChange={(e) => {
                 let value = Number(e.target.value);

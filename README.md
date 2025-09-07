@@ -1,12 +1,32 @@
-# React + Vite
+Mini E-Commerce Store App is a learning pet project of an online store, created for practicing React, Redux, and API integration.
+The application simulates the functionality of a real e-commerce platform: users can browse products, filter and sort them, add items to the cart, place orders, and save favorite products.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🔑 Core Features
 
-Currently, two official plugins are available:
+Home Page: Product list displayed as cards (image, name, price, rating). “Add to cart” button.
+Filtering & Sorting: Filter by categories, brands, and price. Sort by price (ascending/descending), popularity, and novelty.
+Cart: View selected products.Total price calculation. Ability to change quantity or remove items. Promo code support. Delivery method selection.
+Favorites: Save liked products for quick access.
+Orders: View order history with order numbers. Cancel orders.
+Navigation (implemented via react-router-dom): Home, Cart, Favorites, Orders, About Us.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+⚙️ Technologies
 
-## Expanding the ESLint configuration
+React — UI building.
+React Router — routing and navigation.
+Redux Toolkit — state management for cart and orders.
+MockAPI.io — fetching product data.
+TailwindCSS — styling and responsive design.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+🚀 Extra Features
+
+Product search by name.
+Favorites/likes system.
+Responsive layout for mobile devices.
+
+📍 Project Highlights
+
+Compared to the initial idea, additional features were implemented:
+Favorites page with the ability to save liked products.
+Cart now supports promo codes and delivery options.
+Orders page with order history and cancellation option.

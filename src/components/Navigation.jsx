@@ -9,16 +9,25 @@ import { selectCartQuantity } from "../store/cartSlice";
 import { useLocation } from "react-router-dom";
 import { IoFilterSharp } from "react-icons/io5";
 import FiltersPanel from "./FiltersPanel";
+import { useNavigate } from "react-router-dom";
 
 function Navigation({ data }) {
   const totalQ = useSelector(selectCartQuantity);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenFilter, setIsOpenFilter] = useState(false);
   const location = useLocation();
-
+  const nav = useNavigate();
   return (
     <nav className="fixed top-0 left-0 w-full bg-basic-weight py-4 px-4 md:px-25 flex justify-between items-center z-[100] shadow-lg">
-      <img src="/long-logo.svg" alt="logo" draggable="false" />
+      <img
+        src="/long-logo.svg"
+        alt="logo"
+        draggable="false"
+        onClick={() => {
+          nav("/");
+        }}
+        className="cursor-pointer"
+      />
 
       <ul className="hidden md:flex gap-15 items-center *:text-lg *:hover:border-b-3 *:hover:border-basic-red *:font-header *:hover:cursor-pointer">
         <li>
@@ -54,7 +63,10 @@ function Navigation({ data }) {
         </li>
       </ul>
       <div className="flex md:hidden gap-4 items-center">
-        <Link to="/cart" className="flex text-3xl cursor-pointer items-center gap-1 relative">
+        <Link
+          to="/cart"
+          className="flex text-3xl cursor-pointer items-center gap-1 relative"
+        >
           <PiShoppingCartFill className="text-2xl" />
           {totalQ > 0 ? (
             <div className="flex flex-col justify-center rounded-full w-4 h-4 absolute right-[-12px] top-[-2px] text-sm text-center bg-basic-red font-bold text-basic-weight">
@@ -127,7 +139,7 @@ function Navigation({ data }) {
 
       <div
         className={`fixed top-0 left-0 w-full h-full bg-basic-weight z-[200] flex flex-col items-center px-10 justify-center gap-8 text-2xl font-header transition-transform duration-500 ${
-          isOpenFilter ? "translate-y-0 " : "-translate-y-full" 
+          isOpenFilter ? "translate-y-0 " : "-translate-y-full"
         }`}
       >
         <button
@@ -136,7 +148,7 @@ function Navigation({ data }) {
         >
           ✕
         </button>
-        <FiltersPanel sortingName={"sortingMob"}/>
+        <FiltersPanel sortingName={"sortingMob"} />
       </div>
     </nav>
   );

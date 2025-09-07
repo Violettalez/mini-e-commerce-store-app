@@ -12,7 +12,7 @@ function Favorites({ data }) {
     <div className="mt-10 px-5">
       <div className="w-full py-6 bg-gradient-to-r from-basic-red via-dark-red to-basic-black text-center rounded-2xl shadow-lg">
         <h1 className="text-3xl md:text-4xl font-bold text-white drop-shadow-lg tracking-wide">
-          Favourites List
+          Favorites List
         </h1>
         <p className="text-dark-weight text-center">
           Your saved items in one place
@@ -36,11 +36,15 @@ function Favorites({ data }) {
                 <h2 className="text-lg font-semibold font-header">
                   {product.title}
                 </h2>
-                <p className="text-xs md:text-sm text-gray-500">Brand: {product.brand}</p>
+                <p className="text-xs md:text-sm text-gray-500">
+                  Brand: {product.brand}
+                </p>
                 <p className="text-xs md:text-sm text-gray-400">
                   Category: {product.category}
                 </p>
-                <p className="mt-1 md:mt-0 text-lg font-bold">₴{product.price}</p>
+                <p className="mt-1 md:mt-0 text-lg font-bold">
+                  ₴{product.price}
+                </p>
                 <p className="text-sm text-yellow-500">
                   Rating: {product.rating}⭐
                 </p>

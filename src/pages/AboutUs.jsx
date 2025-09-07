@@ -11,7 +11,7 @@ function AboutUs({ data }) {
       <div className="flex flex-row items-center justify-center gap-8 px-6 py-12">
         <div className="hidden lg:flex flex-1 justify-center">
           <img
-            src="/sport-girl.png"
+            src={`${import.meta.env.BASE_URL}sport-girl.png`}
             alt="sport girl"
             className="max-h-[600px] object-contain"
           />
@@ -76,7 +76,7 @@ function AboutUs({ data }) {
 
         <div className="hidden lg:flex flex-1 justify-center">
           <img
-            src="/sport-boy.png"
+            src={`${import.meta.env.BASE_URL}sport-boy.png`}
             alt="sport boy"
             className="max-h-[600px] object-contain"
           />

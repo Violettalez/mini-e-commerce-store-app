@@ -20,7 +20,7 @@ function Navigation({ data }) {
   return (
     <nav className="fixed top-0 left-0 w-full bg-basic-weight py-4 px-4 md:px-25 flex justify-between items-center z-[100] shadow-lg">
       <img
-        src="/long-logo.svg"
+        src={`${import.meta.env.BASE_URL}long-logo.svg`}
         alt="logo"
         draggable="false"
         onClick={() => {
@@ -99,7 +99,11 @@ function Navigation({ data }) {
         >
           ✕
         </button>
-        <img src="/long-logo.svg" alt="logo" draggable="false" />
+        <img
+          src={`${import.meta.env.BASE_URL}long-logo.svg`}
+          alt="logo"
+          draggable="false"
+        />
         <Link to="/" onClick={() => setIsOpen(false)}>
           Home
         </Link>

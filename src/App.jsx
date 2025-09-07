@@ -12,7 +12,7 @@ import { Provider } from "react-redux";
 function App() {
   return (
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter basename="/mini-e-commerce-store-app">
         <div className="w-full min-h-screen py-5 md:px-20">
           <Navigation />
           <Routes>

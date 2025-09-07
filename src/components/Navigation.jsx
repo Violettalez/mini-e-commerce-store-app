@@ -138,7 +138,7 @@ function Navigation({ data }) {
       </div>
 
       <div
-        className={`fixed top-0 left-0 w-full h-full bg-basic-weight z-[200] flex flex-col items-center px-10 justify-center gap-8 text-2xl font-header transition-transform duration-500 ${
+        className={`fixed top-0 left-0 w-full h-[100vh] bg-basic-weight z-[200] flex flex-col items-center px-10 py-0.5 justify-center gap-5 text-2xl font-header transition-transform duration-500 ${
           isOpenFilter ? "translate-y-0 " : "-translate-y-full"
         }`}
       >
@@ -148,19 +148,10 @@ function Navigation({ data }) {
         >
           ✕
         </button>
-        <FiltersPanel sortingName={"sortingMob"} />
-        <button
-          className="md:hidden mt-4 bg-basic-red text-white py-2 px-4 rounded hover:bg-dark-red md:text-base text-xl"
-          onClick={() => setIsOpenFilter(false)}
-        >
-          Apply
-        </button>
-        <button
-          className="mt-2 md:mt-4 md:bg-basic-red text-gray-400 md:text-white py-2 px-4 rounded md:hover:bg-dark-red md:text-base text-xl"
-          onClick={() => dispatch(clearFilters())}
-        >
-          Clean Filters
-        </button>
+        <FiltersPanel
+          sortingName={"sortingMob"}
+          onApplyFilters={() => setIsOpenFilter(false)}
+        />
       </div>
     </nav>
   );

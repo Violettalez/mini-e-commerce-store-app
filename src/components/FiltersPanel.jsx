@@ -10,9 +10,10 @@ import {
   removeBrand,
   setEndPrice,
   setStartPrice,
+  clearFilters,
 } from "../store/filtersSlice";
 
-function FiltersPanel({ sortingName }) {
+function FiltersPanel({ sortingName, onApplyFilters }) {
   const dispatch = useDispatch();
   const {
     category: selectedCategories,
@@ -68,7 +69,6 @@ function FiltersPanel({ sortingName }) {
   };
 
   useEffect(() => {
-    // Принудительно обновляем checked состояние
     const radio = document.querySelector(`input[value="${sorting}"]`);
     if (radio) {
       radio.checked = true;
@@ -76,7 +76,7 @@ function FiltersPanel({ sortingName }) {
   }, [sorting]);
 
   return (
-    <div className="flex flex-col gap-10 px-1 md:px-5 py-5">
+    <div className="flex flex-col gap-10 w-full h-full overflow-y-auto px-1 md:px-5 py-5">
       {/* Search */}
       <div className="relative w-full">
         <BsSearchHeart
@@ -196,6 +196,20 @@ function FiltersPanel({ sortingName }) {
             ))}
           </ul>
         </details>
+        <button
+          className="md:hidden w-full mt-4 bg-basic-red text-white py-2 px-4 rounded hover:bg-dark-red md:text-base text-xl"
+          onClick={() => {
+            if (onApplyFilters) onApplyFilters();
+          }}
+        >
+          Apply
+        </button>
+        <button
+          className="mt-[-12px] md:mt-4 md:bg-basic-red text-gray-400 md:text-white py-2 px-4 rounded md:hover:bg-dark-red text-base"
+          onClick={() => dispatch(clearFilters())}
+        >
+          Clean Filters
+        </button>
       </div>
     </div>
   );

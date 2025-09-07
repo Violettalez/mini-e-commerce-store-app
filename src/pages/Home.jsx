@@ -5,6 +5,7 @@ import { FaBoxes } from "react-icons/fa";
 import { setEndPrice, setMaxPrice } from "../store/filtersSlice";
 import FiltersPanel from "../components/FiltersPanel";
 import axios from "axios";
+import { clearFilters } from "../store/filtersSlice";
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -80,8 +81,14 @@ function Home() {
 
   return (
     <div className="flex bg-basic-weight w-full min-h-[85vh] rounded-xl pt-10">
-      <section className="hidden bg-dark-weight flex-1.5 py-5 px-5 rounded-xl md:flex flex-col gap-10">
+      <section className="hidden bg-dark-weight flex-1.5 py-5 px-5 rounded-xl md:flex md:flex-col">
         <FiltersPanel sortingName={"sorting"} />
+        <button
+          className="bg-basic-red text-white py-2 px-4 rounded hover:bg-dark-red text-base"
+          onClick={() => dispatch(clearFilters())}
+        >
+          Clean Filters
+        </button>
       </section>
       {/* Products */}
       <div className="flex-4 py-5 px-10 grid md:grid-cols-3 gap-4">

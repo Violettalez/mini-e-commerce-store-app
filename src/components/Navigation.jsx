@@ -149,6 +149,18 @@ function Navigation({ data }) {
           ✕
         </button>
         <FiltersPanel sortingName={"sortingMob"} />
+        <button
+          className="md:hidden mt-4 bg-basic-red text-white py-2 px-4 rounded hover:bg-dark-red md:text-base text-xl"
+          onClick={() => setIsOpenFilter(false)}
+        >
+          Apply
+        </button>
+        <button
+          className="mt-2 md:mt-4 md:bg-basic-red text-gray-400 md:text-white py-2 px-4 rounded md:hover:bg-dark-red md:text-base text-xl"
+          onClick={() => dispatch(clearFilters())}
+        >
+          Clean Filters
+        </button>
       </div>
     </nav>
   );

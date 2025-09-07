@@ -50,7 +50,7 @@ const filtersSlise = createSlice({
       state.category = [];
       state.brand = [];
       state.startPrice = 0;
-      state.endPrice = 0;
+      state.endPrice = state.maxPrice;
     },
   },
 });
